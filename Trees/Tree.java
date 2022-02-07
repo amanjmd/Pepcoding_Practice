@@ -107,4 +107,23 @@ public class Tree {
         node.children.forEach(child->removeLeaves(child));
 
       }
+
+      public static void  linearise(Node node){
+        for(Node child:node.children){
+            linearise(child);
+        }
+
+        for(int i = node.children.size()-1 ; i>0;i--){
+            Node secondLast = node.children.get(i-1);
+            Node secondLastTail= getTail(secondLast);
+            secondLastTail.children.add(node.children.get(i));
+            node.children.remove(i);
+        }
+     
+      }
+      public static Node getTail(Node node){
+          if(node.children.isEmpty())
+              return node;
+        return getTail(node.children.get(0));
+      }
 }
