@@ -1,5 +1,7 @@
 package Trees;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -47,9 +49,10 @@ public class Tree {
         for(Node child:node.children)
         mirror(child);
 
-      for(int i = 0 ; i < node.children.size()/2 ;i++){
-          swapNode(node.children, i, node.children.size()-i-1);
-      }
+    //   for(int i = 0 ; i < node.children.size()/2 ;i++){
+    //       swapNode(node.children, i, node.children.size()-i-1);
+    //   }
+    Collections.reverse(node.children);
 
 
     }
@@ -63,7 +66,7 @@ public class Tree {
 
     public static void display(Node node) {
 
-        System.out.print(node.data + "->");
+        System.out.print(node.data + " -> ");
         for (Node child : node.children)
             System.out.print(child.data + ", ");
 
