@@ -1,9 +1,7 @@
 package DataStructures;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import Trees.*;
+import Trees.Node;
+import Trees.Tree;
 
 public class Runner {
     
@@ -12,6 +10,7 @@ public class Runner {
         int[] arr = {10 ,20 ,-1, 30, 50, -1, 60, -1, -1, 40, -1, -1};
         
         Node root = Tree.construct(arr);
-        Tree.traversal(root);
+        Tree.display(root);
+        // Tree.traversal(root);
     }
 }
