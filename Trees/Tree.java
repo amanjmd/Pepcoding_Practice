@@ -1,5 +1,6 @@
 package Trees;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -76,4 +77,17 @@ public class Tree {
 
     }
 
+
+    public static void removeLeaves(Node node) {
+        ArrayList<Node> nodesToRemove= new ArrayList<>();
+        for(Node child : node.children){
+            if(child.children.size() >0){
+                removeLeaves(child);
+            }
+            else{
+                nodesToRemove.add(child);
+            }
+        }
+        node.children.removeAll(nodesToRemove);
+      }
 }
