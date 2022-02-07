@@ -1,11 +1,12 @@
 package Trees;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
     
-    private Integer data;
-    private List<Node> children;
+    public  Integer data;
+    public List<Node> children = new ArrayList<>();;
 
     public List<Node> getChildren() {
         return children;
