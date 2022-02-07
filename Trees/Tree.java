@@ -78,7 +78,7 @@ public class Tree {
     }
 
 
-    public static void removeLeaves(Node node) {
+    public static void removeLeaves1(Node node) {
         ArrayList<Node> nodesToRemove= new ArrayList<>();
         for(Node child : node.children){
             if(child.children.size() >0){
@@ -89,5 +89,22 @@ public class Tree {
             }
         }
         node.children.removeAll(nodesToRemove);
+      }
+
+      public static void removeLeaves(Node node) {
+        /*Use this method when we have to remove the items form 
+        the list: this would avoid concurrent modification 
+        we initialize the i with untouched size of the list and later on , when elements are removed from the list , 
+        it does not affect i 
+
+         */   
+        for(int i = node.children.size()-1 ; i>=0;i--){
+            Node child = node.children.get(i);
+            if(child.children.size()==0)
+                node.children.remove(child); 
+        }
+
+        node.children.forEach(child->removeLeaves(child));
+
       }
 }
