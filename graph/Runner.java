@@ -7,35 +7,33 @@ import java.util.Objects;
 
 import graph.Graphs.Edge;
 
-public class Runner{
+public class Runner {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Edge>[] graph = Graphs.createGraph(br);
         Graphs.printGraph();
 
-        //Has Path
+        // Has Path
         int src = Integer.parseInt(br.readLine());
         int dest = Integer.parseInt(br.readLine());
-        Boolean[] visited = new Boolean[graph.length];
+        boolean[] visited = new boolean[graph.length];boolean[] visited = new boolean[graph.lengthb;
         System.out.println(hasPath(graph, src, dest, visited));
     }
-    private static boolean hasPath(ArrayList<Edge>[] graph,int src, int dest, Boolean[] visited){
-        if(Objects.isNull(graph) ||graph.length==0 )
-            return false;
-        if(src == dest)
-            return true;
-        if(visited[src]== Boolean.TRUE){
-            return false;
-        }
-        visited[src]=true;
-        ArrayList<Edge> edges = graph[src];
-        for(Edge edge :edges){
-            if(hasPath(graph, edge.nbr, dest, visited))
-                return Boolean.TRUE;
-            
-        }
 
+    private static boolean hasPath(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited) {
+
+        if (src == dest)
+            return true;
+        visited[src] = true;
+        ArrayList<Edge> edges = graph[src];
+        for (Edge edge : edges) {
+            //Do not visit the neighbours which are visited
+            if (visited[edge.nbr] == false)
+                if (hasPath(graph, edge.nbr, dest, visited))
+                    return Boolean.TRUE;
+
+        }
         return Boolean.FALSE;
 
     }
