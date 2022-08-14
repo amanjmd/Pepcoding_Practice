@@ -17,8 +17,10 @@ public class Runner {
         // Has Path
         int src = Integer.parseInt(br.readLine());
         int dest = Integer.parseInt(br.readLine());
-        boolean[] visited = new boolean[graph.length];boolean[] visited = new boolean[graph.lengthb;
-        System.out.println(hasPath(graph, src, dest, visited));
+        boolean[] visited = new boolean[graph.length];
+        //System.out.println(hasPath(graph, src, dest, visited));
+        printAllPath(graph, src, dest, visited,""+src);
+
     }
 
     private static boolean hasPath(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited) {
@@ -35,6 +37,26 @@ public class Runner {
 
         }
         return Boolean.FALSE;
+
+    }
+
+    private static void printAllPath(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited, String pathSoFar){
+
+        if(src == dest){
+            System.out.println(pathSoFar);
+        }
+        visited[src] = true;
+        ArrayList<Edge> edges = graph[src];
+
+        for (Edge edge : edges) {
+            //Do not visit the neighbours which are visited
+            if(visited[edge.nbr]== false)
+                printAllPath(graph, edge.nbr, dest, visited,pathSoFar + edge.nbr );      
+
+        }
+        // This below is required , when all the children are 
+        // are parsed for a src,  
+        visited[src] = false;
 
     }
 
