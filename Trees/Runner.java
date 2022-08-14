@@ -1,7 +1,4 @@
-package DataStructures;
-
-import Trees.Node;
-import Trees.Tree;
+package Trees;
 
 public class Runner {
     
