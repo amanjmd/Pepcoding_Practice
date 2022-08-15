@@ -2,6 +2,7 @@ package graph;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
@@ -17,7 +18,7 @@ public class Runner {
     static int weightJustLargest = Integer.MAX_VALUE;
     static String pathJustSmallest;
     static int weightJustSmallest = Integer.MIN_VALUE;
-
+   
     static class Pair implements Comparable<Pair> {
         int wsf;
         String psf;
@@ -54,7 +55,7 @@ public class Runner {
         Graphs.printGraph();
 
         // Has Path
-        // int src = Integer.parseInt(br.readLine());
+        int src = Integer.parseInt(br.readLine());
         // int dest = Integer.parseInt(br.readLine());
         // int criteria = Integer.parseInt(br.readLine());
         // int kForkLargest = Integer.parseInt(br.readLine());
@@ -76,8 +77,10 @@ public class Runner {
         // System.out.println(connectedComponents);
 
         //tell if graph is completely connected , or there is a path from every vertex to every other vertex 
-        ArrayList<ArrayList<Integer>> connectedComponents = getConnectedComponents(graph, visited) ;
-        System.out.println(connectedComponents);
+        //ArrayList<ArrayList<Integer>> connectedComponents = getConnectedComponents(graph, visited) ;
+        //System.out.println(connectedComponents);
+
+         breadthFirstTraversal(graph, visited,src) ;
         
     }
 
@@ -232,5 +235,46 @@ public class Runner {
 
      }
 
-     
+     // Level Order traversal or BFT
+     private static void breadthFirstTraversal(ArrayList<Edge>[] graph, boolean[] visited, int src) {
+
+         //for (int i = 0; i < graph.length; i++) {
+             //if (visited[i] = false) {
+                 ArrayDeque<BfsPair> childrenArrayDeque = new ArrayDeque<>();
+                 childrenArrayDeque.add(new BfsPair(src, src+""));
+                 traverse(graph, visited, childrenArrayDeque);
+             //}
+         //}
+
+     }
+
+     static class BfsPair {
+         private int vtx;
+         private String path;
+
+         public BfsPair(int vtx, String path) {
+             this.vtx = vtx;
+             this.path = path;
+         }
+
+     }
+
+     public static void traverse(ArrayList<Edge>[] graph, boolean[] visited, ArrayDeque<BfsPair> childrenArrayDeque) {
+        
+         while (childrenArrayDeque.size() > 0) {
+             BfsPair src = childrenArrayDeque.remove();
+             
+             if(visited[src.vtx] == true)
+                continue;
+             visited[src.vtx] = true;
+             ArrayList<Edge> edges = graph[src.vtx];
+             
+             System.out.print(src.vtx + "@" + src.path );
+             for (Edge edge : edges) {
+                 if(visited[edge.nbr]==false )
+                    childrenArrayDeque.add(new BfsPair(edge.nbr, src.path+edge.nbr));
+             }
+             System.out.println();
+         }
+     }
 }
