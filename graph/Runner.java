@@ -238,14 +238,23 @@ public class Runner {
      // Level Order traversal or BFT
      private static void breadthFirstTraversal(ArrayList<Edge>[] graph, boolean[] visited, int src) {
 
-         //for (int i = 0; i < graph.length; i++) {
-             //if (visited[i] = false) {
-                 ArrayDeque<BfsPair> childrenArrayDeque = new ArrayDeque<>();
+                ArrayDeque<BfsPair> childrenArrayDeque = new ArrayDeque<>();
                  childrenArrayDeque.add(new BfsPair(src, src+""));
-                 traverse(graph, visited, childrenArrayDeque);
-             //}
-         //}
-
+                 while (childrenArrayDeque.size() > 0) {
+                    BfsPair removed = childrenArrayDeque.remove();
+                    
+                    if(visited[removed.vtx] == true)
+                       continue;
+                    visited[removed.vtx] = true;
+                    ArrayList<Edge> edges = graph[removed.vtx];
+                    
+                    System.out.print(removed.vtx + "@" + removed.path );
+                    for (Edge edge : edges) {
+                        if(visited[edge.nbr]==false )
+                           childrenArrayDeque.add(new BfsPair(edge.nbr, removed.path+edge.nbr));
+                    }
+                    System.out.println();
+                }
      }
 
      static class BfsPair {
@@ -259,22 +268,4 @@ public class Runner {
 
      }
 
-     public static void traverse(ArrayList<Edge>[] graph, boolean[] visited, ArrayDeque<BfsPair> childrenArrayDeque) {
-        
-         while (childrenArrayDeque.size() > 0) {
-             BfsPair src = childrenArrayDeque.remove();
-             
-             if(visited[src.vtx] == true)
-                continue;
-             visited[src.vtx] = true;
-             ArrayList<Edge> edges = graph[src.vtx];
-             
-             System.out.print(src.vtx + "@" + src.path );
-             for (Edge edge : edges) {
-                 if(visited[edge.nbr]==false )
-                    childrenArrayDeque.add(new BfsPair(edge.nbr, src.path+edge.nbr));
-             }
-             System.out.println();
-         }
-     }
 }
