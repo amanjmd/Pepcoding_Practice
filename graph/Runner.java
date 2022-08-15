@@ -72,6 +72,10 @@ public class Runner {
         System.out.println(kForkLargest + "th largest path = " + pq.peek().psf + "@" + pq.peek().wsf); */
 
         //GetConnected Components
+        // ArrayList<ArrayList<Integer>> connectedComponents = getConnectedComponents(graph, visited) ;
+        // System.out.println(connectedComponents);
+
+        //tell if graph is completely connected , or there is a path from every vertex to every other vertex 
         ArrayList<ArrayList<Integer>> connectedComponents = getConnectedComponents(graph, visited) ;
         System.out.println(connectedComponents);
         
@@ -227,4 +231,6 @@ public class Runner {
         }
 
      }
+
+     
 }
