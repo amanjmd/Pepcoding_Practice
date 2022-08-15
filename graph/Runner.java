@@ -32,32 +32,53 @@ public class Runner {
         }
     }
 
+    /*
+10
+11
+0 3 10
+3 2 10
+2 1 10
+0 1 10
+1 6 10
+6 4 10
+6 5 10
+4 5 10
+8 7 10
+7 9 10
+9 8 10
+    */
+
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Edge>[] graph = Graphs.createGraph(br);
         Graphs.printGraph();
 
         // Has Path
-        int src = Integer.parseInt(br.readLine());
-        int dest = Integer.parseInt(br.readLine());
-        int criteria = Integer.parseInt(br.readLine());
-        int kForkLargest = Integer.parseInt(br.readLine());
+        // int src = Integer.parseInt(br.readLine());
+        // int dest = Integer.parseInt(br.readLine());
+        // int criteria = Integer.parseInt(br.readLine());
+        // int kForkLargest = Integer.parseInt(br.readLine());
         boolean[] visited = new boolean[graph.length];
         // System.out.println(hasPath(graph, src, dest, visited));
         // printAllPath(graph, src, dest, visited,""+src);
 
         // Multisolver Begin
-        pq = new PriorityQueue<Pair>(kForkLargest);
+        /* pq = new PriorityQueue<Pair>(kForkLargest);
         multisolver(graph, src, dest, visited, "" + src, 0, kForkLargest, criteria);
         System.out.println("Smallest Path = " + pathWithSmallestWeight + "@" + smallestWeight);
         System.out.println("Largest Path = " + pathWithLargesttWeight + "@" + largestWeight);
         System.out.println("Just Larger Path than " + criteria + " = " + pathJustLargest + "@" + weightJustLargest);
         System.out.println("Just Smaller Path than " + criteria + " = " + pathJustSmallest + "@" + weightJustSmallest);
-        System.out.println(kForkLargest + "th largest path = " + pq.peek().psf + "@" + pq.peek().wsf);
+        System.out.println(kForkLargest + "th largest path = " + pq.peek().psf + "@" + pq.peek().wsf); */
+
+        //GetConnected Components
+        ArrayList<ArrayList<Integer>> connectedComponents = getConnectedComponents(graph, visited) ;
+        System.out.println(connectedComponents);
+        
     }
 
     /*
-     * 1. You are given a graph, a src vertex and a destination vertex.
+     * 1. You are given a graph, a src vertex and a d estination vertex.
      * 2. You are required to find if a path exists between src and dest. If it
      * does, print true
      * otherwise print false.
@@ -176,4 +197,34 @@ public class Runner {
         visited[src] = false;
 
     }
+
+     // You are given a graph. 2. You are required to find and print all connected
+      // components of the graph.
+      public static ArrayList<ArrayList<Integer>> getConnectedComponents(ArrayList<Edge>[] graph, boolean[] visited) {
+
+        ArrayList<ArrayList<Integer>> comps = new ArrayList<>();
+        for (int i = 0; i < graph.length; i++) {
+
+           if (visited[i] == false) {
+              ArrayList<Integer> verticesOfComponent = new ArrayList<>();
+              getComponent(graph, i, visited, verticesOfComponent);
+              comps.add(verticesOfComponent);
+           }
+        }
+
+        return comps;
+     }
+
+     private static void getComponent(ArrayList<Edge>[] graph, int src, boolean[] visited,
+           ArrayList<Integer> verticesOfComponent) {
+        visited[src] = true;
+        ArrayList<Edge> edges = graph[src];
+        verticesOfComponent.add(src);
+        for (Edge edge : edges) {
+           if (visited[edge.nbr] == false) {
+            getComponent(graph, edge.nbr, visited, verticesOfComponent);  
+           }
+        }
+
+     }
 }
