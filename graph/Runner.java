@@ -235,7 +235,28 @@ public class Runner {
 
      }
 
-     // Level Order traversal or BFT
+     // Level Order traversal or BFT, This also gievs the shortest path from source
+     // to a node .
+     /*
+      * 0 -> 1@10,3@10
+      * 1 -> 0@10,2@10
+      * 2 -> 1@10,3@10
+      * 3 -> 2@10,0@10,4@10
+      * 4 -> 3@10,5@10,6@10
+      * 5 -> 4@10,6@10
+      * 6 -> 5@10,4@10
+      * 
+      * 2@2
+      * 1@21
+      * 3@23
+      * 0@210
+      * 4@234
+      * 5@2345
+      * 6@2346
+
+      From the otput , we can see , that 1 and 3 are 2 vertex away , 0 and 4 are 3 vertex away  and 6&6 are 4 vertex away .
+      Hence BFS always gives the shortest path
+      */
      private static void breadthFirstTraversal(ArrayList<Edge>[] graph, boolean[] visited, int src) {
 
                 ArrayDeque<BfsPair> childrenArrayDeque = new ArrayDeque<>();
@@ -257,6 +278,8 @@ public class Runner {
                 }
      }
 
+
+     //THis class is required to keep information of the parent for which that vertex was added for processing
      static class BfsPair {
          private int vtx;
          private String path;
